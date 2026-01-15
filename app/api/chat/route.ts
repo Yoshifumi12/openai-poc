@@ -88,6 +88,9 @@ export async function POST(req: NextRequest) {
       ],
     });
 
+    const searchStartTime = new Date();
+    console.log(`File search started at: ${searchStartTime.toISOString()}`);
+
     const response = await openai.responses.create({
       model: "gpt-4o-mini",
       input: message,
@@ -98,6 +101,12 @@ export async function POST(req: NextRequest) {
         },
       ],
     });
+
+    const searchEndTime = new Date();
+    console.log(`File search ended at: ${searchEndTime.toISOString()}`);
+
+    const searchDuration = searchEndTime.getTime() - searchStartTime.getTime();
+    console.log(`File search duration: ${searchDuration}ms`);
 
     return NextResponse.json({
       conversationId: conversation.id,
